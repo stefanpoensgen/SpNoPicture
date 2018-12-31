@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../engine/Shopware/Components/Plugin/schema/config.xsd">
+    <elements>
+
+        <element scope="shop" required="true" type="mediaselection">
+            <name>mediaID</name>
+            <label lang="de">Bild ID:</label>
+            <label lang="en">Image ID:</label>
+            <options>
+                <albumId>-1</albumId>
+                <multiSelect>false</multiSelect>
+                <readOnly>true</readOnly>
+                <returnValue>id</returnValue>
+            </options>
+        </element>
+
+    </elements>
+</config>
