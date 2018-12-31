@@ -6,5 +6,5 @@ Shopware Plugin to set a default product picture instead of "no picture" image f
 * Install the Plugin with the Plugin Manager
 * Set default media in plugin settings
 
-###ä Todo
+### Todo
 * avoid image get trashed by garbage collector
