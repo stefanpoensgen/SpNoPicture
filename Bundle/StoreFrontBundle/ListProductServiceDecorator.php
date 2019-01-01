@@ -45,7 +45,7 @@ class ListProductServiceDecorator implements ListProductServiceInterface
         $this->coreService = $coreService;
         $this->mediaService = $mediaService;
         $this->pluginName = $pluginName;
-        $this->config = $config->getByPluginName($pluginName);
+        $this->config = $config->getByPluginName($pluginName, Shopware()->Shop());
     }
 
 
@@ -55,7 +55,17 @@ class ListProductServiceDecorator implements ListProductServiceInterface
     public function getList(array $numbers, Struct\ProductContextInterface $context)
     {
         $products = $this->coreService->getList($numbers, $context);
-        $noPicture = $this->mediaService->get($this->config['mediaID'], $context);
+        $mediaID = $this->config['mediaID'];
+
+        if(!$mediaID){
+            return $products;
+        }
+
+        /** @var Struct\Media $noPicture */
+        $noPicture = $this->mediaService->get($mediaID, $context);
+        if(!$noPicture instanceof Struct\Media) {
+            return $products;
+        }
 
         foreach ($products as $product) {
             if ($product->getCover() === null) {
