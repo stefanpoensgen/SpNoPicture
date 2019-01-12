@@ -1,4 +1,5 @@
 <?php
+
 namespace SpNoPicture;
 
 use Shopware\Components\Plugin;

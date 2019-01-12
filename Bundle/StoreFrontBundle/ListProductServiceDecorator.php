@@ -2,9 +2,9 @@
 
 namespace SpNoPicture\Bundle\StoreFrontBundle;
 
+use Shopware\Bundle\StoreFrontBundle\Service\Core\MediaService;
 use Shopware\Bundle\StoreFrontBundle\Service\ListProductServiceInterface;
 use Shopware\Bundle\StoreFrontBundle\Struct;
-use Shopware\Bundle\StoreFrontBundle\Service\Core\MediaService;
 use Shopware\Components\Plugin\CachedConfigReader;
 
 class ListProductServiceDecorator implements ListProductServiceInterface
@@ -31,9 +31,10 @@ class ListProductServiceDecorator implements ListProductServiceInterface
 
     /**
      * ListProductServiceDecorator constructor.
+     *
      * @param ListProductServiceInterface $coreService
-     * @param MediaService $mediaService
-     * @param CachedConfigReader $config
+     * @param MediaService                $mediaService
+     * @param CachedConfigReader          $config
      * @param $pluginName
      */
     public function __construct(
@@ -48,7 +49,6 @@ class ListProductServiceDecorator implements ListProductServiceInterface
         $this->config = $config->getByPluginName($pluginName, Shopware()->Shop());
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -57,13 +57,13 @@ class ListProductServiceDecorator implements ListProductServiceInterface
         $products = $this->coreService->getList($numbers, $context);
         $mediaID = $this->config['mediaID'];
 
-        if(!$mediaID){
+        if (!$mediaID) {
             return $products;
         }
 
         /** @var Struct\Media $noPicture */
         $noPicture = $this->mediaService->get($mediaID, $context);
-        if(!$noPicture instanceof Struct\Media) {
+        if (!$noPicture instanceof Struct\Media) {
             return $products;
         }
 
