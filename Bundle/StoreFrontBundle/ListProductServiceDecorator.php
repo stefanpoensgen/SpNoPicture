@@ -55,7 +55,7 @@ class ListProductServiceDecorator implements ListProductServiceInterface
         $this->coreService = $coreService;
         $this->mediaService = $mediaService;
         $this->pluginName = $pluginName;
-        $this->config = $config->getByPluginName($pluginName, $this->container->get('shop'));
+        $this->config = $config;
     }
 
     /**
@@ -63,8 +63,10 @@ class ListProductServiceDecorator implements ListProductServiceInterface
      */
     public function getList(array $numbers, Struct\ProductContextInterface $context)
     {
+        $config = $this->config->getByPluginName($this->pluginName, $this->container->get('shop'));
+
         $products = $this->coreService->getList($numbers, $context);
-        $mediaID = $this->config['mediaID'];
+        $mediaID = $config['mediaID'];
 
         if (!$mediaID) {
             return $products;
