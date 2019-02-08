@@ -1,0 +1,22 @@
+parameters:
+    level: 5
+
+    autoload_directories:
+        - %currentWorkingDirectory%/../../../var/cache
+        - %currentWorkingDirectory%/../../../engine/Library
+        - %currentWorkingDirectory%
+
+    autoload_files:
+        - %currentWorkingDirectory%/../../../autoload.php
+
+    paths:
+        - %currentWorkingDirectory%
+
+    ignoreErrors:
+        - '#apcu_#'
+        - '#ioncube_#'
+        - '#opcache_#'
+        - '#imagettftext#'
+        - '#class Redis#'
+
+    reportUnmatchedIgnoredErrors: false
