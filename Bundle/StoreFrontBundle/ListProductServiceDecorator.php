@@ -42,7 +42,7 @@ class ListProductServiceDecorator implements ListProductServiceInterface
      * @param ListProductServiceInterface $coreService
      * @param MediaService                $mediaService
      * @param CachedConfigReader          $config
-     * @param $pluginName
+     * @param string                      $pluginName
      */
     public function __construct(
         DIContainer $container,
@@ -79,7 +79,7 @@ class ListProductServiceDecorator implements ListProductServiceInterface
         }
 
         foreach ($products as $product) {
-            if ($product->getCover() === null) {
+            if (!$product->getCover() instanceof Struct\Media) {
                 $product->setCover($noPicture);
             }
         }
