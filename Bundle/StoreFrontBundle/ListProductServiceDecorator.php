@@ -59,7 +59,10 @@ class ListProductServiceDecorator implements ListProductServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param array                          $numbers
+     * @param Struct\ProductContextInterface $context
+     *
+     * @return Struct\ListProduct[]
      */
     public function getList(array $numbers, Struct\ProductContextInterface $context)
     {
@@ -88,7 +91,10 @@ class ListProductServiceDecorator implements ListProductServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string                         $number
+     * @param Struct\ProductContextInterface $context
+     *
+     * @return mixed|Struct\ListProduct
      */
     public function get($number, Struct\ProductContextInterface $context)
     {

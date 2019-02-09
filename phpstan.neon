@@ -1,5 +1,5 @@
 parameters:
-    level: 5
+    level: 7
 
     autoload_directories:
         - %currentWorkingDirectory%/../../../var/cache
@@ -11,12 +11,5 @@ parameters:
 
     paths:
         - %currentWorkingDirectory%
-
-    ignoreErrors:
-        - '#apcu_#'
-        - '#ioncube_#'
-        - '#opcache_#'
-        - '#imagettftext#'
-        - '#class Redis#'
 
     reportUnmatchedIgnoredErrors: false
