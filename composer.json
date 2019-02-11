@@ -1,0 +1,13 @@
+{
+    "name": "stefanpoensgen/sp-no-picture",
+    "keywords": ["shopware", "shopware-plugin"],
+    "description": "Shopware Plugin to set a default product picture instead of \"no picture\" image from theme.",
+    "license": "MIT",
+    "type": "shopware-plugin",
+    "extra": {
+        "installer-name": "SpNoPicture"
+    },
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
