@@ -11,8 +11,8 @@
             <argument id="service_container" type="service"/>
             <argument id="sp_no_picture_bundle_store_front.list_product_service_decorator.inner" type="service"/>
             <argument id="shopware_storefront.media_service" type="service"/>
-            <argument id="shopware.plugin.cached_config_reader" type="service"/>
             <argument>%sp_no_picture.plugin_name%</argument>
+            <argument id="shopware.plugin.cached_config_reader" type="service"/>
         </service>
 
     </services>

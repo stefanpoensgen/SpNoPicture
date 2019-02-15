@@ -14,6 +14,3 @@ Feel free to fork and send pull requests!
 ## Licence
 
 This project uses the [MIT License](LICENCE.md).
-
-### Todo
-* avoid image get trashed by garbage collector
