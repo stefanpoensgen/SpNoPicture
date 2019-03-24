@@ -4,14 +4,13 @@
     <elements>
 
         <element scope="shop" type="mediaselection">
-            <name>virtualPath</name>
+            <name>noPictureId</name>
             <label lang="de">Bild:</label>
             <label lang="en">Image:</label>
             <options>
+                <xtype>shopware-media-field</xtype>
                 <albumId>-1</albumId>
                 <multiSelect>false</multiSelect>
-                <readOnly>false</readOnly>
-                <returnValue>virtualPath</returnValue>
             </options>
         </element>
 

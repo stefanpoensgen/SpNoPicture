@@ -4,6 +4,12 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
 
+        <service id="sp_no_picture.config" class="Shopware\Components\Plugin\CachedConfigReader">
+            <factory service="shopware.plugin.cached_config_reader" method="getByPluginName"/>
+            <argument type="string">SpNoPicture</argument>
+            <argument type="expression">container.initialized('shop') ? service('shop') : null</argument>
+        </service>
+
         <service class="SpNoPicture\Bundle\StoreFrontBundle\ListProductServiceDecorator"
                  id="sp_no_picture_bundle_store_front.list_product_service_decorator"
                  decorates="shopware_storefront.list_product_service"
@@ -11,8 +17,19 @@
             <argument id="service_container" type="service"/>
             <argument id="sp_no_picture_bundle_store_front.list_product_service_decorator.inner" type="service"/>
             <argument id="shopware_storefront.media_service" type="service"/>
-            <argument>%sp_no_picture.plugin_name%</argument>
+            <argument id="sp_no_picture.config" type="service"/>
+        </service>
+
+        <service id="sp_no_picture.repository.shop" class="Shopware\Components\Model\ModelRepository">
+            <factory service="models" method="getRepository"/>
+            <argument type="string">Shopware\Models\Shop\Shop</argument>
+        </service>
+
+        <service class="SpNoPicture\Subscriber\MediaGarbageCollector" id="sp_no_picture.subscriber.media_garbage_collector">
+            <argument id="dbal_connection" type="service"/>
             <argument id="shopware.plugin.cached_config_reader" type="service"/>
+            <argument id="sp_no_picture.repository.shop" type="service"/>
+            <tag name="shopware.event_subscriber"/>
         </service>
 
     </services>

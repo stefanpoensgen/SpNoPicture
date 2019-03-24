@@ -12,4 +12,7 @@ parameters:
     paths:
         - %currentWorkingDirectory%
 
+    ignoreErrors:
+        - '#Cannot call method fetchAll()#'
+
     reportUnmatchedIgnoredErrors: false

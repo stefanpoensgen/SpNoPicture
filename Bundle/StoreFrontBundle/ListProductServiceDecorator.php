@@ -6,8 +6,6 @@ use Shopware\Bundle\StoreFrontBundle\Service\Core\MediaService;
 use Shopware\Bundle\StoreFrontBundle\Service\ListProductServiceInterface;
 use Shopware\Bundle\StoreFrontBundle\Struct;
 use Shopware\Components\DependencyInjection\Container as DIContainer;
-use Shopware\Components\Model\QueryBuilder;
-use Shopware\Components\Plugin\CachedConfigReader;
 
 class ListProductServiceDecorator implements ListProductServiceInterface
 {
@@ -27,13 +25,9 @@ class ListProductServiceDecorator implements ListProductServiceInterface
     private $mediaService;
 
     /**
-     * @var string
+     * @var array
      */
-    private $pluginName;
-    /**
-     * @var CachedConfigReader
-     */
-    private $config;
+    private $pluginConfig;
 
     /**
      * ListProductServiceDecorator constructor.
@@ -41,45 +35,24 @@ class ListProductServiceDecorator implements ListProductServiceInterface
      * @param DIContainer                 $container
      * @param ListProductServiceInterface $coreService
      * @param MediaService                $mediaService
-     * @param string                      $pluginName
-     * @param CachedConfigReader          $config
+     * @param array                       $pluginConfig
      */
     public function __construct(
         DIContainer $container,
         ListProductServiceInterface $coreService,
         MediaService $mediaService,
-        string $pluginName,
-        CachedConfigReader $config
+        array $pluginConfig
     ) {
         $this->container = $container;
         $this->coreService = $coreService;
         $this->mediaService = $mediaService;
-        $this->pluginName = $pluginName;
-        $this->config = $config;
+        $this->pluginConfig = $pluginConfig;
     }
 
     public function getList(array $numbers, Struct\ProductContextInterface $context)
     {
-        $config = $this->config->getByPluginName($this->pluginName, $this->container->get('shop'));
-
         $products = $this->coreService->getList($numbers, $context);
-        $virtualPath = $config['virtualPath'];
-
-        if (!$virtualPath) {
-            return $products;
-        }
-
-        /** @var QueryBuilder $builder */
-        $query = $this->container->get('dbal_connection')->createQueryBuilder();
-        $query->select('id')
-            ->from('s_media', 'media')
-            ->where('path = :path')
-            ->setParameter('path', $virtualPath);
-
-        $mediaId = $query->execute()->fetch(\PDO::FETCH_COLUMN);
-        if (!$mediaId) {
-            return $products;
-        }
+        $mediaId = $this->pluginConfig['noPictureId'];
 
         /** @var Struct\Media $noPicture */
         $noPicture = $this->mediaService->get($mediaId, $context);
