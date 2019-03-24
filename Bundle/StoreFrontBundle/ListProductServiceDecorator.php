@@ -5,15 +5,9 @@ namespace SpNoPicture\Bundle\StoreFrontBundle;
 use Shopware\Bundle\StoreFrontBundle\Service\Core\MediaService;
 use Shopware\Bundle\StoreFrontBundle\Service\ListProductServiceInterface;
 use Shopware\Bundle\StoreFrontBundle\Struct;
-use Shopware\Components\DependencyInjection\Container as DIContainer;
 
 class ListProductServiceDecorator implements ListProductServiceInterface
 {
-    /**
-     * @var DIContainer
-     */
-    private $container;
-
     /**
      * @var ListProductServiceInterface
      */
@@ -32,18 +26,15 @@ class ListProductServiceDecorator implements ListProductServiceInterface
     /**
      * ListProductServiceDecorator constructor.
      *
-     * @param DIContainer                 $container
      * @param ListProductServiceInterface $coreService
      * @param MediaService                $mediaService
      * @param array                       $pluginConfig
      */
     public function __construct(
-        DIContainer $container,
         ListProductServiceInterface $coreService,
         MediaService $mediaService,
         array $pluginConfig
     ) {
-        $this->container = $container;
         $this->coreService = $coreService;
         $this->mediaService = $mediaService;
         $this->pluginConfig = $pluginConfig;
@@ -52,10 +43,9 @@ class ListProductServiceDecorator implements ListProductServiceInterface
     public function getList(array $numbers, Struct\ProductContextInterface $context)
     {
         $products = $this->coreService->getList($numbers, $context);
-        $mediaId = $this->pluginConfig['noPictureId'];
 
         /** @var Struct\Media $noPicture */
-        $noPicture = $this->mediaService->get($mediaId, $context);
+        $noPicture = $this->mediaService->get($this->pluginConfig['noPictureId'], $context);
         if (!$noPicture instanceof Struct\Media) {
             return $products;
         }
