@@ -46,6 +46,9 @@ class MediaGarbageCollector implements SubscriberInterface
         ];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function onCollectMediaPositions()
     {
         $this->connection->exec('CREATE TEMPORARY TABLE IF NOT EXISTS s_media_used (id int auto_increment, mediaId int NOT NULL, PRIMARY KEY pkid (id), INDEX media (mediaId))');
