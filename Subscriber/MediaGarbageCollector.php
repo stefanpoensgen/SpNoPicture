@@ -19,7 +19,9 @@ class MediaGarbageCollector implements SubscriberInterface
      */
     private $pluginConfig;
 
-    /** @var ShopRepository */
+    /**
+     * @var ShopRepository
+     */
     private $shopRepository;
 
     /**
